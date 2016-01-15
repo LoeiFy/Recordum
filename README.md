@@ -1,2 +1,3 @@
 # Recordum
-https://github.com/LoeiFy/Recordum/issues
+
+issues for blog posts http://mirror.am0200.com
