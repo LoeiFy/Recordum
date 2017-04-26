@@ -1,0 +1,83 @@
+# site
+title: Recordum
+description: A Node.js blog tool powered by GitHub.
+keywords: acyort, nodejs, blog
+rss: rss.xml
+favicon: icon.png
+
+# site url. you can set as 'http://yoursite.com/child' if need
+# please add 'http://' or 'https://'
+url: http://acyort.am0200.com
+
+# comment
+disqus: acyort
+
+# language
+language: en
+
+# theme
+theme: donob
+
+# pagination
+# set 0 if no need paging
+per_page: 5
+archives_per_page: 30
+
+# thumbnail mode
+# 1: use the first image as thumbnail and remove the image
+# 2: use the first image as thumbnail but not remove the image
+thumbnail_mode: 2
+
+#menu
+menu:
+  Archives: /archives/
+  About: /about/
+
+# category
+default_category: blog
+
+# html output directory or child directory e.g. 'child'
+public_dir: public
+
+# category directory
+category_dir:
+
+# tag directory
+tag_dir:
+
+# post directory
+post_dir:
+
+# archives directory
+archives_dir:
+
+# source
+# site content source
+# your github username/repository
+user: LoeiFy
+repository: Recordum
+
+# site post authors filter
+authors:
+  - LoeiFy
+#  - author0
+#  - author1
+
+# GitHub access token(optional)
+# token should be separated by '#' if you push this file to GitHub
+token: 5#c21bffc137f44faf7e9c4a84da827f7cc2cfeaa
+
+# json output
+# boolean or string
+# you can set json output path
+json: false
+
+# dev mode
+dev: false
+
+# other
+# customize some settings if you need
+
+# duoshuo:
+# blogroll:
+#  GitHub: https://github.com
