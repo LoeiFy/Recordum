@@ -1,83 +1,96 @@
 # site
+# default "AcyOrt", "A Node.js blog tool powered by GitHub."
 title: Recordum
-description: A Node.js blog tool powered by GitHub.
-keywords: acyort, nodejs, blog
-rss: rss.xml
-favicon: icon.png
+description: All about Recordum
+
+# rss
+# set false if no need rss output
+# default "rss.xml"
+rss:
 
 # site url. you can set as 'http://yoursite.com/child' if need
 # please add 'http://' or 'https://'
+# default "https://acyortjs.github.io"
 url: http://acyort.am0200.com
 
-# comment
-disqus: acyort
-
 # language
-language: en
+# base on the theme support
+# default "en"
+language:
 
 # theme
+# default "ccc45"
 theme: donob
 
 # pagination
 # set 0 if no need paging
+# default 10, 30
 per_page: 5
-archives_per_page: 30
+archives_per_page:
 
 # thumbnail mode
 # 1: use the first image as thumbnail and remove the image
 # 2: use the first image as thumbnail but not remove the image
-thumbnail_mode: 2
+# default 2
+thumbnail_mode:
 
-#menu
+# menu
 menu:
   Archives: /archives/
   About: /about/
 
 # category
+# default "uncategorized"
 default_category: blog
 
 # html output directory or child directory e.g. 'child'
+# default "/"
 public_dir: public
 
 # category directory
+# default "category"
 category_dir:
 
 # tag directory
+# default "tag"
 tag_dir:
 
 # post directory
+# default "posts"
 post_dir:
 
 # archives directory
+# default "archives"
 archives_dir:
 
-# source
 # site content source
-# your github username/repository
+# your github user/repository
+# default "acyortjs", "acyortjs.github.io"
 user: LoeiFy
 repository: Recordum
 
-# site post authors filter
+# post authors
+# github username
 authors:
-  - LoeiFy
-#  - author0
-#  - author1
+ - LoeiFy
 
-# GitHub access token(optional)
-# token should be separated by '#' if you push this file to GitHub
+# gitHub access token(optional)
+# token should be separated by '#' if you push this file to github
 token: 5#c21bffc137f44faf7e9c4a84da827f7cc2cfeaa
 
 # json output
 # boolean or string
 # you can set json output path
-json: false
+# default false
+json:
 
 # dev mode
-dev: false
+# default false
+dev:
 
 # other
-# customize some settings if you need
+# customize some settings if need
 
-# duoshuo:
-# blogroll:
-#  GitHub: https://github.com
+# disqus:
+# keywords:
+# favicon:
