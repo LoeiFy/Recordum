@@ -1,51 +1,97 @@
+# Base Config
+
 # site
 # default "AcyOrt", "A Node.js blog tool powered by GitHub."
 title: Recordum
 description: All about Recordum
 
 # rss
-# set false if no need rss output
+# set false if not need rss output
 # default "rss.xml"
 rss:
 
-# site url. you can set as 'http://yoursite.com/child' if need
+# site url. you can set as 'http://yoursite.com/child' if necessary
 # please add 'http://' or 'https://'
 # default "https://acyortjs.github.io"
 url: http://acyort.am0200.com
-
-# language
-# base on the theme support
-# default "en"
-language:
 
 # theme
 # default "ccc45"
 theme: donob
 
 # pagination
-# set 0 if no need paging
-# default 10, 30
+# set 0 if not need
+# default 10
 per_page: 5
+
+# menu
+menu:
+  Archives: /archives/
+  About: /about/
+  # categories: /category/
+  # tags: /tag/
+
+# category
+# default "uncategorized"
+default_category: blog
+
+# site content source
+# your github user/repository
+# default "acyortjs", "acyortjs.github.io"
+user: LoeiFy
+repository: Recordum
+
+
+# Advance Config
+
+# scripts
+# script file name
+scripts:
+  # - hexo.js
+
+# html output directory or child directory e.g. 'child'
+# default "/"
+public_dir: public
+
+# blog post authors
+# github username
+authors:
+  - LoeiFy
+#  - author0
+#  - author1
+
+# timezone
+# the timezone of your website
+# example: America/New_York, Japan, or UTC
+# default is local system timezone
+timezone: Asia/Shanghai
+
+# language
+# requires theme support
+language:
+
+# code line numbers
+# whether to dispaly code line numbers
+# default true
+line_numbers:
+
+# archives pagination
+# set 0 if not need
+# default 30
 archives_per_page:
+
+# post order
+# order by create time" or "update time"
+# created: use "create time"
+# updated: use "update time"
+# default "created"
+order:
 
 # thumbnail mode
 # 1: use the first image as thumbnail and remove the image
 # 2: use the first image as thumbnail but not remove the image
 # default 2
 thumbnail_mode:
-
-# menu
-menu:
-  Archives: /archives/
-  About: /about/
-
-# category
-# default "uncategorized"
-default_category: blog
-
-# html output directory or child directory e.g. 'child'
-# default "/"
-public_dir: public
 
 # category directory
 # default "category"
@@ -63,19 +109,9 @@ post_dir:
 # default "archives"
 archives_dir:
 
-# site content source
-# your github user/repository
-# default "acyortjs", "acyortjs.github.io"
-user: LoeiFy
-repository: Recordum
-
-# post authors
-# github username
-authors:
- - LoeiFy
-
 # gitHub access token(optional)
 # token should be separated by '#' if you push this file to github
+# example: 5#c31bffc137f44faf7efc4a84da827g7ca2cfeaa
 token: 5#c21bffc137f44faf7e9c4a84da827f7cc2cfeaa
 
 # json output
@@ -88,8 +124,9 @@ json:
 # default false
 dev:
 
-# other
-# customize some settings if need
+
+# Other Config
+# customize some settings if necessary
 
 # disqus:
 # keywords:
