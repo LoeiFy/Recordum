@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "Recordum",
+  "version": "0.1.0",
+  "description": "Recordum",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoeiFy/Recordum.git"
+  },
+  "keywords": [],
+  "author": "LoeiFy@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LoeiFy/Recordum/issues"
+  },
+  "homepage": "https://github.com/LoeiFy/Recordum#readme",
+  "dependencies": {
+    "acyort-archives": "^1.0.4",
+    "acyort-paginator": "^0.1.3",
+    "acyort-rss": "^0.1.4"
+  }
+}
