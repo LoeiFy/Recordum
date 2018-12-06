@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - checkout
-      - run: npm install acyort -g
+      - run: npm install acyort@2.3 -g
       - run: acyort init
       - run: cp config.bak.yml config.yml
       - run: npm i
