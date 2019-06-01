@@ -1,6 +1,6 @@
 template: '@acyort/pigeon'
 
-plugin:
+plugins:
   - hook.js
   - '@acyort/pigeon'
 

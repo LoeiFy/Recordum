@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAGFBMVEUAAAA7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozsmr7C1AAAAB3RSTlMA8o3HRiCjAZ7XVAAAAFRJREFUKM9jGAUMDE6GwiroYkHi5eWFqqhirOnlQFAWgCLIVA4GCiiCjhBBERRBdYhgEYqgOUSwGEVQHCJYSEgQoZ2QRQgnEXI8wpsEAgQRdKOAAQCvriuz6lBMNwAAAABJRU5ErkJggg==" type="image/x-icon">
+<meta name="keywords" content="" />
+<meta name="description" content="Why is the pigeon so big" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="/assets/style.css" />
+
+<title>
+Recordum / nycticorax - 简洁的 React 状态管理
+</title>
+</head>
+<body>
+
+<div class="menu">
+  <span class="shadow"><button></button></span>
+  <a class="shadow" href="/">Recordum</a>
+  <div class="shadow">
+  
+    <a href="/archives/">archives</a>
+  
+    <a href="/tags/">tags</a>
+  
+    <a href="/about/">about</a>
+  
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="header">
+    <div>
+      
+<p>
+  
+  <a href="/categories/blog/">blog</a>
+  
+  - June 01, 2019
+</p>
+
+      <h2>
+nycticorax - 简洁的 React 状态管理
+</h2>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+    
+<div class="markdown-body">
+<p>nycticorax 是一个 JavaScript 应用状态管理器，并且默认集成 React 使用</p><p>项目地址：<a href="https://github.com/fratercula/nycticorax">https://github.com/fratercula/nycticorax</a></p><p>在 React 上使用非常简单，只需要用 <code>connect</code> 这个 API，没有 <code>Provider</code>，<code>reducer</code>，<code>action</code> 等概念</p><!-- more -->
+
+<h2>
+  <a href="#使用" id="使用"></a>使用
+</h2><p>1.创建 store，这个是基本的操作</p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> createStore <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'nycticorax'</span>
+<span class="token function">createStore</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><p>当然也可以忽略这个步骤，不创建 store，这样就不检查数据类型以及是否存在当前 key，非常自由 :)</p><p>2.然后需要关联起 view 跟 store 吧，不然咋知道那些需要视图更新</p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> connect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'nycticorax'</span>
+
+<span class="token keyword">function</span> <span class="token constant">A</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> dispatch<span class="token punctuation">,</span> name <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">// connect 过的组件可以使用 dispatch</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    <span class="token operator">&lt;</span>div<span class="token operator">></span>
+      <span class="token operator">&lt;</span>p<span class="token operator">></span><span class="token punctuation">{</span>name<span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>p<span class="token operator">></span> <span class="token punctuation">{</span><span class="token comment">/* 使用 store 中 name 的值 */</span><span class="token punctuation">}</span>
+      <span class="token operator">&lt;</span>button 
+        onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">}</span> <span class="token punctuation">{</span><span class="token comment">/* 这里 dispatch 改变 store 里的 name 的值为 1 */</span><span class="token punctuation">}</span>
+      <span class="token operator">></span>
+        <span class="token keyword">set</span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+  <span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token function">connect</span><span class="token punctuation">(</span><span class="token string">'name'</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token constant">A</span><span class="token punctuation">)</span> <span class="token comment">// 这里是 connect，表示需要使用 store 中的 name 的值</span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><p>然后就这样可以啦，不需要像 Redux 那样需要 Provider 在最外层包裹容器</p><h2>
+  <a href="#问题/对比" id="问题/对比"></a>问题/对比
+</h2><p>以上是最基本用法，当然还支持其他高级功能</p><h3>
+  <a href="#异步 dispatch" id="异步 dispatch"></a>异步 dispatch
+</h3><p>nycticorax 允许函数 dispatch，并传入相关参数 </p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">asyncDispatch</span><span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> dispatch<span class="token punctuation">,</span> getStore <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>args<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token comment">// get current store</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> name <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">getStore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// update name</span>
+    <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">'a'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">'b'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+      <span class="token comment">// resolve</span>
+      <span class="token function">resolve</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token function">dispatch</span><span class="token punctuation">(</span>asyncDispatch<span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span> name<span class="token punctuation">:</span> <span class="token string">'c'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><h3>
+  <a href="#不同的实例" id="不同的实例"></a>不同的实例
+</h3><p>直接使用是在同一个实例下的，当然可以新建实例</p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-js"><code class="language-js"><span class="token keyword">import</span> Nycticorax <span class="token keyword">from</span> <span class="token string">'nycticorax'</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> createStore<span class="token punctuation">,</span> connect <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Nycticorax</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><h3>
+  <a href="#性能" id="性能"></a>性能
+</h3><p>跟 Redux 一样，最小化更新，nycticorax 只有在 connect 绑定的 key 值发生变化时候才会更新对应组件，并且对 dispatch 做优化处理</p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-js"><code class="language-js"><span class="token keyword">import</span> <span class="token punctuation">{</span> dispatch <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'nycticorax'</span>
+
+<span class="token comment">// this</span>
+<span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span> a<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> b<span class="token punctuation">:</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span> b<span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">// will be merged as</span>
+<span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token punctuation">{</span> a<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> b<span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><h3>
+  <a href="#对比 Redux" id="对比 Redux"></a>对比 Redux
+</h3><p>在我看来，Redux 是一种代码设计模式，强调的是函数式编程，而状态管理只是 Redux 附带的一个功能</p><p>nycticorax 是纯粹的数据状态共享管理器，其工作模式非常直观简洁 dispatch =&gt; store =&gt; view。简单说就是共享一些数据状态，然后在适当时候更新数据状态，更新对应的视图</p><h3>
+  <a href="#跟踪变化" id="跟踪变化"></a>跟踪变化
+</h3><p>dispatch 允许传入对象直接修改 store，同时也支持传入 function，这样就可以记录所有变化了，遵循特定的约定，统一来管理，让状态的变化可以预测</p>
+</div>
+
+<div class="post-tags">
+
+  <a href="/tags/javascript/">Javascript</a>
+
+  <a href="/tags/react/">React</a>
+
+</div>
+
+<div class="post-nav paginator">
+
+<a class="nav-prev" href="/posts/223304114.html">
+  <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><defs><style/></defs><path d="M576 672c-6.4 0-19.2 0-25.6-6.4l-128-128c-12.8-12.8-12.8-32 0-44.8l128-128c12.8-12.8 32-12.8 44.8 0s12.8 32 0 44.8L492.8 512l102.4 102.4c12.8 12.8 12.8 32 0 44.8 0 12.8-12.8 12.8-19.2 12.8z"/></svg>
+  零配置运行 ES6/TS/React/Vue/ 代码
+</a>
+
+
+<a class="nav-next" href="/posts/210285498.html">
+  关于 react-router 的 browserHistory 模式
+  <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><defs><style/></defs><path d="M448 672c-6.4 0-19.2 0-25.6-6.4-12.8-12.8-12.8-32 0-44.8L531.2 512 422.4 409.6c-12.8-12.8-12.8-32 0-44.8s32-12.8 44.8 0l128 128c12.8 12.8 12.8 32 0 44.8l-128 128c0 6.4-12.8 6.4-19.2 6.4z"/></svg>
+</a>
+
+</div>
+
+
+    </div>
+  </div>
+
+  <div class="footer">
+  <div>
+    <p>&copy; 2019 Recordum</p>
+    <p>Powered by <a target="_blank" href="https://github.com/acyortjs/acyort">AcyOrt</a></p>
+  </div>
+  <a href="#" class="top">Top</a>
+</div>
+
+</div>
+
+<script src="/assets/script.js"></script>
+</body>
+</html>
