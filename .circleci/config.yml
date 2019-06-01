@@ -17,9 +17,10 @@ jobs:
 
     steps:
       - checkout
+      - run: rm -rf docs
       - run: npm install acyort -g
       - run: npm i
-      - run: npm run build
+      - run: TOKEN=${gh_token} acyort flow
       - run: git add .
       - run: git config user.name "LoeiFy"
       - run: git config user.email "LoeiFy@gmail.com"
