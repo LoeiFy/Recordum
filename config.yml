@@ -1,44 +1,22 @@
-title: Recordum
-description: All about Recordum
+template: '@acyort/pigeon'
 
-url: https://acyort.am0200.com
-theme: donob
+plugin:
+  - hook.js
+  - '@acyort/pigeon'
 
-per_page: 7
+repository: LoeiFy/Recordum
 
-# menu
-menu:
-  Archives: /archives/
-  About: /about/
+favicon: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAGFBMVEUAAAA7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozsmr7C1AAAAB3RSTlMA8o3HRiCjAZ7XVAAAAFRJREFUKM9jGAUMDE6GwiroYkHi5eWFqqhirOnlQFAWgCLIVA4GCiiCjhBBERRBdYhgEYqgOUSwGEVQHCJYSEgQoZ2QRQgnEXI8wpsEAgQRdKOAAQCvriuz6lBMNwAAAABJRU5ErkJggg==
 
-default_category: blog
-
-user: LoeiFy
-repository: Recordum
-
-plugins:
-  - acyort-rss
-  - acyort-archives
-  - acyort-paginator
-
-public_dir: public
-
-authors:
-  - LoeiFy
+public: docs
 
 timezone: Asia/Shanghai
 
-language:
+menu:
+  archives: /archives/
+  tags: /tags/
+  about: /about/
 
-line_numbers:
+perpage: 7
 
-order:
-
-token: 5#c21bffc137f44faf7e9c4a84da827f7cc2cfeaa
-
-cache: true
-
-rss: true
-
-archives:
-  per_page: 30
+title: Recordum
