@@ -1,0 +1,279 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAGFBMVEUAAAA7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozsmr7C1AAAAB3RSTlMA8o3HRiCjAZ7XVAAAAFRJREFUKM9jGAUMDE6GwiroYkHi5eWFqqhirOnlQFAWgCLIVA4GCiiCjhBBERRBdYhgEYqgOUSwGEVQHCJYSEgQoZ2QRQgnEXI8wpsEAgQRdKOAAQCvriuz6lBMNwAAAABJRU5ErkJggg==" type="image/x-icon">
+<meta name="keywords" content="" />
+<meta name="description" content="Why is the pigeon so big" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="/assets/style.css" />
+
+<title>
+Recordum / 创建类似 http://ithinkimight.com/ 随机大小排布界面
+</title>
+</head>
+<body>
+
+<div class="menu">
+  <span class="shadow"><button></button></span>
+  <a class="shadow" href="/">Recordum</a>
+  <div class="shadow">
+  
+    <a href="/archives/">archives</a>
+  
+    <a href="/tags/">tags</a>
+  
+    <a href="/about/">about</a>
+  
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="header">
+    <div>
+      
+<p>
+  
+  <a href="/categories/blog/">blog</a>
+  
+  - February 02, 2018
+</p>
+
+      <h2>
+创建类似 http://ithinkimight.com/ 随机大小排布界面
+</h2>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+    
+<div class="markdown-body">
+<p><code>ithinkimight.com</code> 这个网站图片来自 Instagram，图片随机大小，位置也是随机，图片可以重叠，但是并没有 <strong>过分</strong> 重叠。这种随机大小，位置排版页面元素跟平常的整齐 <code>grid</code> 或者 <code>瀑布流</code> 风格很不一样，下面我们尝试一下实现类似效果</p><!-- more -->
+
+<p>从网站源文件上看并不能看出网站是如何随机排布这些图片，因为是后端直接输出图片的位置参数，并不是前端实现的位置计算。不过这里有一种简单方法，可以实现类似效果。先看一下具体效果</p><h3>
+  <a href="#例子以及实际运用效果" id="例子以及实际运用效果"></a>例子以及实际运用效果
+</h3><p><a href="http://jsfiddle.net/am0200/1mn5xbf8/">http://jsfiddle.net/am0200/1mn5xbf8/</a></p><p><a href="http://stone.am0200.com/">http://stone.am0200.com/</a></p><h3>
+  <a href="#实现思路" id="实现思路"></a>实现思路
+</h3><p>首先把 container 划分为 4 个块，然后需要随机定位的 4 个块分别放到这 4 个区域，最后定义这 4 个块距离左边跟上边的最远，最近距离即可</p><h3>
+  <a href="#实现代码" id="实现代码"></a>实现代码
+</h3><p>html 部分，我们只是生成 4 个容器，每个容器都可以放置一张图片</p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>section</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>d0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>d1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>d2<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>d3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>section</span><span class="token punctuation">></span></span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><p>css 部分，我们使用绝对定位来设置每个容器的主要位置</p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-css"><code class="language-css"><span class="token selector">section</span> <span class="token punctuation">{</span>
+    <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
+    <span class="token property">height</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">section div</span> <span class="token punctuation">{</span>
+    <span class="token property">position</span><span class="token punctuation">:</span> absolute<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">#d0</span> <span class="token punctuation">{</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">#d1</span> <span class="token punctuation">{</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">#d2</span> <span class="token punctuation">{</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token selector">#d3</span> <span class="token punctuation">{</span>
+    <span class="token property">left</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+    <span class="token property">top</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><p>js 部分，我们设置 4 个块随机大小，并且随机上下左右距离，需要注意的是，这个距离是有一定的范围的</p><div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+<span>6</span>
+<span>7</span>
+<span>8</span>
+<span>9</span>
+<span>10</span>
+<span>11</span>
+<span>12</span>
+<span>13</span>
+<span>14</span>
+<span>15</span>
+<span>16</span>
+<span>17</span>
+<span>18</span>
+<span>19</span>
+<span>20</span>
+<span>21</span>
+<span>22</span>
+<span>23</span>
+<span>24</span>
+<span>25</span>
+<span>26</span>
+<span>27</span>
+<span>28</span>
+<span>29</span>
+<span>30</span>
+<span>31</span>
+<span>32</span>
+<span>33</span>
+<span>34</span>
+<span>35</span>
+<span>36</span>
+<span>37</span>
+<span>38</span>
+<span>39</span>
+<span>40</span>
+<span>41</span>
+<span>42</span>
+<span>43</span>
+<span>44</span>
+<span>45</span>
+<span>46</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token parameter">n<span class="token punctuation">,</span>m</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">var</span> c <span class="token operator">=</span> m<span class="token operator">-</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>  
+    <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> c <span class="token operator">+</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> w <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'section'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    h <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'section'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">height</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">each</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> wh <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token number">150</span><span class="token punctuation">,</span> <span class="token number">200</span><span class="token punctuation">)</span>
+    <span class="token function">$</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        width<span class="token punctuation">:</span> wh<span class="token punctuation">,</span>
+        height<span class="token punctuation">:</span> wh
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">var</span> d0 <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d0'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    d1 <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d1'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    d2 <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d2'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    d3 <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d3'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> a1 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token punctuation">(</span>d0 <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> w <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d0<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    a2 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> h <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d0 <span class="token operator">/</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> b1 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token punctuation">(</span>d1 <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> w <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d1<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    b2 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token punctuation">(</span>d1 <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> h <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> c1 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> w <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d2 <span class="token operator">/</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    c2 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token punctuation">(</span>d2 <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> h <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d2<span class="token punctuation">)</span><span class="token punctuation">;</span>    
+
+<span class="token keyword">var</span> e1 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> w <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d3 <span class="token operator">/</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    e2 <span class="token operator">=</span> <span class="token function">rd</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> h <span class="token operator">/</span> <span class="token number">2</span> <span class="token operator">-</span> d3 <span class="token operator">/</span> <span class="token number">4</span> <span class="token operator">*</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d0'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-left'</span><span class="token punctuation">,</span> a1 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d0'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-top'</span><span class="token punctuation">,</span> a2 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d1'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-left'</span><span class="token punctuation">,</span> b1 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d1'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-top'</span><span class="token punctuation">,</span> b2 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d2'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-left'</span><span class="token punctuation">,</span> c1 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d2'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-top'</span><span class="token punctuation">,</span> c2 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d3'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-left'</span><span class="token punctuation">,</span> e1 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+<span class="token function">$</span><span class="token punctuation">(</span><span class="token string">'#d3'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">css</span><span class="token punctuation">(</span><span class="token string">'margin-top'</span><span class="token punctuation">,</span> e2 <span class="token operator">+</span><span class="token string">'px'</span><span class="token punctuation">)</span>
+</code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><h3>
+  <a href="#其他问题" id="其他问题"></a>其他问题
+</h3><p>这种定位简单方便，但是如果是单数块的时候，就要做一下相关处理了</p>
+</div>
+
+<div class="post-tags">
+
+  <a href="/tags/blog/">Blog</a>
+
+  <a href="/tags/grid/">Grid</a>
+
+  <a href="/tags/javascript/">Javascript</a>
+
+</div>
+
+<div class="post-nav paginator">
+
+<a class="nav-prev" href="/posts/71470122.html">
+  <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><defs><style/></defs><path d="M576 672c-6.4 0-19.2 0-25.6-6.4l-128-128c-12.8-12.8-12.8-32 0-44.8l128-128c12.8-12.8 32-12.8 44.8 0s12.8 32 0 44.8L492.8 512l102.4 102.4c12.8 12.8 12.8 32 0 44.8 0 12.8-12.8 12.8-19.2 12.8z"/></svg>
+  输入框输入值自动格式化
+</a>
+
+
+</div>
+
+
+    </div>
+  </div>
+
+  <div class="footer">
+  <div>
+    <p>&copy; 2019 Recordum</p>
+    <p>Powered by <a target="_blank" href="https://github.com/acyortjs/acyort">AcyOrt</a></p>
+  </div>
+  <a href="#" class="top">Top</a>
+</div>
+
+</div>
+
+<script src="/assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAGFBMVEUAAAA7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozsmr7C1AAAAB3RSTlMA8o3HRiCjAZ7XVAAAAFRJREFUKM9jGAUMDE6GwiroYkHi5eWFqqhirOnlQFAWgCLIVA4GCiiCjhBBERRBdYhgEYqgOUSwGEVQHCJYSEgQoZ2QRQgnEXI8wpsEAgQRdKOAAQCvriuz6lBMNwAAAABJRU5ErkJggg==" type="image/x-icon">
+<meta name="keywords" content="" />
+<meta name="description" content="Why is the pigeon so big" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="/assets/style.css" />
+
+<title>
+Recordum / 零配置运行 ES6/TS/React/Vue/ 代码
+</title>
+</head>
+<body>
+
+<div class="menu">
+  <span class="shadow"><button></button></span>
+  <a class="shadow" href="/">Recordum</a>
+  <div class="shadow">
+  
+    <a href="/archives/">archives</a>
+  
+    <a href="/tags/">tags</a>
+  
+    <a href="/about/">about</a>
+  
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="header">
+    <div>
+      
+<p>
+  
+  <a href="/categories/blog/">blog</a>
+  
+  - June 01, 2019
+</p>
+
+      <h2>
+零配置运行 ES6/TS/React/Vue/ 代码
+</h2>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+    
+<div class="markdown-body">
+<p>Falco 是基于 webpack，npm 的一层封装。解决的问题是 demo 代码的构建打包问题，而直接运行代码是附加的一个功能</p><!-- more -->
+
+<p>项目地址：<a href="https://github.com/fratercula/falco">https://github.com/fratercula/falco</a></p><h3>
+  <a href="#背景" id="背景"></a>背景
+</h3><p>JavaScript 模块或者框架需要 demo 展示来说明使用方式，例如 <a href="https://ant.design">antd</a> 里面就有很多 demo 的展示。那么怎么快速生成这些 demo 呢，一些框架可以做类似事情，例如 <a href="https://github.com/pedronauck/docz">docz</a></p><p>但 <code>docz</code> 只是解决本地已经安装的问题，也就是说 demo 的展示需要本地已经安装好依赖。那这样就有问题了，如果 demo 代码是各种 js 依赖的，那就是说要不断的本地安装依赖。无法运行时构建</p><h3>
+  <a href="#方案" id="方案"></a>方案
+</h3><p>动态分析代码所需要的依赖，然后自动安装对应的依赖，再用 webpack 进行构建，完美解决上述问题。详细可以查看 <a href="https://github.com/fratercula/falco">Falco</a> 的实现。简单的步骤为</p><ol>
+<li>分析代码依赖，获取需要安装的 js 依赖</li>
+<li>安装依赖到系统临时目录</li>
+<li>webpack 构建</li>
+</ol>
+<h3>
+  <a href="#扩展" id="扩展"></a>扩展
+</h3><p>开发这个工具的主要目的就如上述所说，但是开发过程中发现，结合 <code>webpack-dev-server</code> 可以做到运行和构建 js 代码，只要在某些步骤中做一些处理</p><ol>
+<li>分析代码过程，需要递归的去分析文件依赖树，再进行分析 js 包的依赖</li>
+<li>此步骤还是一样</li>
+<li>webpack 构建，区分运行或者打包模式，然后选择使用 <code>webpack-dev-server</code> 运行构建</li>
+</ol>
+<h3>
+  <a href="#其他" id="其他"></a>其他
+</h3><p>开发过程中遇到的一些问题</p><ol>
+<li>node 方式使用 <code>webpack-dev-server</code> 时候需要手动引入一些依赖</li>
+</ol>
+<div class="code-highlight">
+  <table>
+    <tbody>
+      <tr>
+        <td class="code-highlight-line"><pre class="language-none"><code class="language-none"><span>1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+</code></pre></td>
+        <td class="code-highlight-code"><pre class="language-js"><code class="language-js"><span class="token operator">...</span>
+entry<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span><span class="token string">'webpack-dev-server/client?'</span><span class="token punctuation">,</span> <span class="token string">'webpack/hot/dev-server'</span><span class="token punctuation">)</span>
+plugins<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">webpack<span class="token punctuation">.</span>HotModuleReplacementPlugin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token operator">...</span></code></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div><p>  这里有个特殊的地方 <code>webpack-dev-server/client?</code>，问好后面不能带域名跟端口，可能跟我的使用方式有关，不过这些依赖在新版已经不需要加上了，所以也不用纠结了</p><ol start="2">
+<li><code>@babel/plugin-transform-runtime</code> 的 <code>absoluteRuntime</code> 配置，这个配置在原来 <code>babel</code> 官方是没有展示的，我自己翻源代码找到的。不过后面 <code>babel</code> 官方把这个设置放出来了。相关 <a href="https://github.com/babel/babel/issues/9526">issue</a></li>
+</ol>
+
+</div>
+
+<div class="post-tags">
+
+  <a href="/tags/javascript/">Javascript</a>
+
+  <a href="/tags/vue/">Vue</a>
+
+  <a href="/tags/webpack/">webpack</a>
+
+</div>
+
+<div class="post-nav paginator">
+
+<a class="nav-prev" href="/posts/225371660.html">
+  <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><defs><style/></defs><path d="M576 672c-6.4 0-19.2 0-25.6-6.4l-128-128c-12.8-12.8-12.8-32 0-44.8l128-128c12.8-12.8 32-12.8 44.8 0s12.8 32 0 44.8L492.8 512l102.4 102.4c12.8 12.8 12.8 32 0 44.8 0 12.8-12.8 12.8-19.2 12.8z"/></svg>
+  AcyOrt - 基于 Node.js 的静态网站生成框架
+</a>
+
+
+<a class="nav-next" href="/posts/210285498.html">
+  关于 react-router 的 browserHistory 模式
+  <svg class="icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="30" height="30"><defs><style/></defs><path d="M448 672c-6.4 0-19.2 0-25.6-6.4-12.8-12.8-12.8-32 0-44.8L531.2 512 422.4 409.6c-12.8-12.8-12.8-32 0-44.8s32-12.8 44.8 0l128 128c12.8 12.8 12.8 32 0 44.8l-128 128c0 6.4-12.8 6.4-19.2 6.4z"/></svg>
+</a>
+
+</div>
+
+
+    </div>
+  </div>
+
+  <div class="footer">
+  <div>
+    <p>&copy; 2019 Recordum</p>
+    <p>Powered by <a target="_blank" href="https://github.com/acyortjs/acyort">AcyOrt</a></p>
+  </div>
+  <a href="#" class="top">Top</a>
+</div>
+
+</div>
+
+<script src="/assets/script.js"></script>
+</body>
+</html>
